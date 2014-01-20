@@ -1,0 +1,9 @@
+Package: com.tyhoff.spotdefine
+Name: SpotDefine
+Depends: mobilesubstrate firmware (>= 7.0)
+Architecture: iphoneos-arm
+Description: Add word definition lookup in Spotlight. 
+Version: 0.9
+Maintainer: Tyler Hoffman <tyhoffman1@gmail.com>
+Author: Tyler Hoffman <tyhoffman1@gmail.com>
+Section: Tweaks
