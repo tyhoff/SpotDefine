@@ -9,7 +9,7 @@
 	SBSearchHeader *_searchHeader;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath;
-- (long long)tableView:(UITableView *)tableView numberOfRowsInSection:(long long)section;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
 - (id)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 @end
 
@@ -24,7 +24,7 @@
 %hook SBSearchViewController
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	
+
 	/* when "Define" cell is selected */	
 	if (indexPath.row == 2 && indexPath.section == tableView.numberOfSections - 1)  
 	{
@@ -68,8 +68,7 @@
 }
 
 
-- (long long)tableView:(UITableView *)tableView numberOfRowsInSection:(long long)section {
-	%log;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
 	/* Instead of 2 rows in last section, make it 3 so we can have room for "Define" */
 	if (section == tableView.numberOfSections - 1) 
