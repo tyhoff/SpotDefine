@@ -1,3 +1,10 @@
+#define GET_INT(key, default) (prefs[key] ? ((NSNumber *)prefs[key]).intValue : default)
+#define GET_BOOL(key, default) (prefs[key] ? ((NSNumber *)prefs[key]).boolValue : default)
+
+#define LOCAL 0
+#define GOOGLE 1
+#define URBAN 2
+
 @interface SBSearchHeader
 @property(readonly, nonatomic) UITextField *searchField;
 @end;

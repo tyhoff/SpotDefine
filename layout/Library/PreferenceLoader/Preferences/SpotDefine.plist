@@ -35,6 +35,34 @@
 		</dict>
 		<dict>
 			<key>cell</key>
+			<string>PSLinkListCell</string>
+			<key>default</key>
+			<string>0</string>
+			<key>defaults</key>
+			<string>com.tyhoff.spotdefine</string>
+			<key>detail</key>
+			<string>PSListItemsController</string>
+			<key>key</key>
+			<string>source</string>
+			<key>label</key>
+			<string>Defintion Source</string>
+			<key>PostNotification</key>
+			<string>com.tyhoff.spotdefine.preferencechanged</string>
+			<key>validTitles</key>
+			<array>
+				<string>Local</string>
+				<string>Google</string>
+				<string>Urban Dictionary</string>
+			</array>
+			<key>validValues</key>
+			<array>
+				<string>0</string>
+				<string>1</string>
+				<string>2</string>
+			</array>
+		</dict>
+		<dict>
+			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>isStaticText</key>
 			<true/>
