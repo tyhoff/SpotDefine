@@ -26,11 +26,8 @@ static int source;
 		} 
 		else if (source == URBAN)
 		{
-			// /* create URL with search term */
-			// /* TODO: Set a preference for definitions */
 			NSString * stringURL = [NSString stringWithFormat:@"http://www.urbandictionary.com/define.php?term=%@", searchText];
 
-			/* open Safari to search for definition */
 			NSURL *url = [NSURL URLWithString:stringURL];
 			[[UIApplication sharedApplication] openURL:url];
 		}
