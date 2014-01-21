@@ -1,0 +1,11 @@
+Package: com.tyhoff.spotdefine
+Name: SpotDefine
+Depends: mobilesubstrate, preferenceloader, firmware (>= 7.0)
+Version: 0.9
+Architecture: iphoneos-arm
+Description: Add native/web word definition lookup in Spotlight. 
+Maintainer: Tyler Hoffman <tyhoffman1@gmail.com>
+Author: Tyler Hoffman <tyhoffman1@gmail.com>
+Section: Tweaks
+Homepage: https://github.com/tyhoff/SpotDefine
+Icon: file:///Library/PreferenceLoader/Preferences/SpotDefine@2x.png
