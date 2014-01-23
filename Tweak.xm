@@ -77,7 +77,7 @@
 		UIReferenceLibraryViewController *controller = [[UIReferenceLibraryViewController alloc] initWithTerm:searchText];	
 		
 		/* present the view */
-		[self presentViewController:controller animated:YES completion:NULL];
+		[self presentModalViewController:controller animated:YES];
 
 		/* unselect the cell */
 		[tableView deselectRowAtIndexPath:indexPath animated:YES];
