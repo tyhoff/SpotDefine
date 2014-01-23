@@ -31,11 +31,25 @@
 - (void)setIsLastInSection:(_Bool)arg1;
 @end
 
+UIReferenceLibraryViewController *controller;
 
 /* Implementation */
 
+%hook UIReferenceLibraryViewController
+- (void)_searchWeb:(id)arg1
+{
+	%orig;
+	[self dismissModalViewControllerAnimated:YES];
+}
+%end
+
 /* hook into Spotlights View Controller */
 %hook SBSearchViewController
+{
+	%orig;
+
+}
+- (void)dismiss;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -74,7 +88,7 @@
 		NSString * searchText = header.searchField.text;
 
 		/* create an overlay of the Dictionary Controller */
-		UIReferenceLibraryViewController *controller = [[UIReferenceLibraryViewController alloc] initWithTerm:searchText];	
+		controller = [[UIReferenceLibraryViewController alloc] initWithTerm:searchText];	
 		
 		/* present the view */
 		[self presentModalViewController:controller animated:YES];
