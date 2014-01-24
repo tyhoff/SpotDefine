@@ -1,7 +1,7 @@
 Package: com.tyhoff.spotdefine
 Name: SpotDefine
 Depends: mobilesubstrate, firmware (>= 7.0)
-Version: 1.1
+Version: 1.1.1
 Architecture: iphoneos-arm
 Description: Add local dictionary lookup in Spotlight. 
 Maintainer: Tyler Hoffman <tyhoffman1@gmail.com>

@@ -59,7 +59,7 @@ UIReferenceLibraryViewController *controller;
 	{
 		isSpotDefineHeader = YES;
 	}
-	if (section != 0)
+	else
 	{
 		section -= 1;
 	}
