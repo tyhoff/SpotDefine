@@ -35,21 +35,17 @@ UIReferenceLibraryViewController *controller;
 
 /* Implementation */
 
+/* if Search Web clicked, close the dictionary view */
 %hook UIReferenceLibraryViewController
 - (void)_searchWeb:(id)arg1
 {
 	%orig;
-	[self dismissModalViewControllerAnimated:YES];
+	[self dismissModalViewControllerAnimated:NO];
 }
 %end
 
 /* hook into Spotlights View Controller */
 %hook SBSearchViewController
-{
-	%orig;
-
-}
-- (void)dismiss;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
