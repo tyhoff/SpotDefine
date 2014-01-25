@@ -1,39 +1,13 @@
-/* Headers from private frameworks */
+#import "headers.h"
 
-//SBSearchTableViewCell
-//sectionHeaderHeight
-
-@interface SBSearchHeader
-@property(readonly, nonatomic) UITextField *searchField;
-@end;
-
-@interface SBSearchViewController : UIViewController
-{
-	SBSearchHeader *_searchHeader;
-}
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath;
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
-- (id)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView;
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section;
-@end
-
-@interface SBSearchTableHeaderView
-@property(retain, nonatomic) NSString *title;
-@end
-
-@interface SBSearchTableViewCell : UITableViewCell
-@property(retain, nonatomic) NSString *title;
-@property(nonatomic, getter=isLastInSection) _Bool lastInSection;
-@property(nonatomic, getter=isFirstInSection) _Bool firstInSection;
-- (void)updateBottomLine;
-- (void)setIsLastInSection:(_Bool)arg1;
-@end
+#define GET_INT(key, default) (prefs[key] ? ((NSNumber *)prefs[key]).intValue : default)
+#define GET_BOOL(key, default) (prefs[key] ? ((NSNumber *)prefs[key]).boolValue : default)
 
 UIReferenceLibraryViewController *controller;
+bool enabled;
+bool placeAtTop;
+int language;
 
-/* Implementation */
 
 /* if Search Web clicked, close the dictionary view */
 %hook UIReferenceLibraryViewController
@@ -167,3 +141,28 @@ UIReferenceLibraryViewController *controller;
 }
 
 %end;
+
+
+/* called when a change to the preferences has been made */
+static void LoadSettings()
+{
+  	NSDictionary *prefs = [NSDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/com.tyhoff.spotdefine.plist"];
+  	enabled = GET_BOOL(@"enabled", YES);
+  	placeAtTop = GET_BOOL(@"placeAtTop", YES);
+  	language = GET_INT(@"language", 0);
+}
+
+/* called when a change to the preferences has been made */
+static void ChangeNotification(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo)
+{
+  	LoadSettings();
+}
+
+
+/* constructor of tweak */
+%ctor
+{
+	/* subsribe to preference changed notification */
+	CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, ChangeNotification, CFSTR("com.tyhoff.spotdefine.preferencechanged"), NULL, CFNotificationSuspensionBehaviorCoalesce);
+  	LoadSettings();
+}
