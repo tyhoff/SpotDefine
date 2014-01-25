@@ -9,6 +9,8 @@ bool placeAtTop;
 int language;
 
 
+static NSString* searchDictionaryString();
+
 /* if Search Web clicked, close the dictionary view */
 %hook UIReferenceLibraryViewController
 - (void)_searchWeb:(id)arg1
@@ -93,7 +95,7 @@ int language;
 		indexPath = real;
 
 		/* title of the cell */
-		cell.title = @"Search Dictionary";
+		cell.title = searchDictionaryString();
 		[cell setIsLastInSection:YES];
 		cell.firstInSection = YES;
 		cell.lastInSection = YES;
@@ -127,8 +129,8 @@ int language;
 }
 
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section 
+{
 	if (section == 0) 
 	{
 		return 1;
@@ -142,6 +144,32 @@ int language;
 
 %end;
 
+static NSString* searchDictionaryString()
+{
+	switch (language)
+	{
+		/* English */
+		case 0:
+			return @"Search Dictionary";
+			break;
+
+		/* Italian */
+		case 1:
+			return @"Cerca sul Dizionario";
+			break;
+
+		/* German */
+		case 2:
+			return @"Wörterbuch-Suche";
+			break;
+
+		/* Korean */
+		case 3:
+			return @"사전 검색";
+			break;
+	}
+	return @"Search Dictionary";
+}
 
 /* called when a change to the preferences has been made */
 static void LoadSettings()

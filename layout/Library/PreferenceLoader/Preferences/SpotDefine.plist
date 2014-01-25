@@ -68,17 +68,17 @@
 			<string>com.tyhoff.spotdefine.preferencechanged</string>
 			<key>validTitles</key>
 			<array>
-				<string>English</string> <!-- Search Dictionary -->
-				<string>Italian</string> <!-- Cerca sul Dizionario -->
-				<string>Spanish</string>
-				<string>German</string> <!--Wörterbuch-Suche-->
+				<string>English</string> 
+				<string>Italian</string> 
+				<string>German</string> 
+				<string>Korean</string> 
 			</array>
 			<key>validValues</key>
 			<array>
 				<string>0</string>
 				<string>1</string>
 				<string>2</string> 
-				<string>3</string>
+				<string>3</string> 
 			</array>
 		</dict>
 		<dict>
