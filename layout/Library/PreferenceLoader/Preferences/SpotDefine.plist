@@ -63,7 +63,7 @@
 			<key>key</key>
 			<string>language</string>
 			<key>label</key>
-			<string>Laguage (todo)</string>
+			<string>Language</string>
 			<key>PostNotification</key>
 			<string>com.tyhoff.spotdefine.preferencechanged</string>
 			<key>validTitles</key>
@@ -72,6 +72,11 @@
 				<string>Italian</string> 
 				<string>German</string> 
 				<string>Korean</string> 
+				<string>Dutch</string>
+				<string>Spanish</string>
+				<string>French</string>
+				<string>Japanese</string>
+				<string>Chinese</string>
 			</array>
 			<key>validValues</key>
 			<array>
@@ -79,6 +84,11 @@
 				<string>1</string>
 				<string>2</string> 
 				<string>3</string> 
+				<string>4</string>
+				<string>5</string>
+				<string>6</string>
+				<string>7</string>
+				<string>8</string>
 			</array>
 		</dict>
 		<dict>
@@ -107,6 +117,12 @@
 			<key>label</key>
 			<string>Contact: tyhoffman1@gmail.com</string>
 		</dict>
+		<dict>
+            <key>cell</key>
+            <string>PSGroupCell</string>
+            <key>footerText</key>
+            <string>If you would like to see another language, please send me an email with the translation of "Search Dictionary"</string>
+        </dict>
 	</array>
 	<key>title</key>
 	<string>SpotDefine</string>

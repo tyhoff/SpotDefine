@@ -23,107 +23,213 @@ static NSString* searchDictionaryString();
 /* hook into Spotlights View Controller */
 %hook SBSearchViewController
 
+- (_Bool)_shouldDisplayImagesForDomain:(unsigned int)arg1
+{
+	%log;
+	return %orig;
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-	return %orig + 1;
+	if (enabled) 
+	{
+		if (placeAtTop)
+		{
+			return %orig + 1;
+		}
+		else 
+		{
+			return %orig;
+		}
+	}
+
+	return %orig;
+	
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-	BOOL isSpotDefineHeader = NO;
-	if (section == 0)
+	if (enabled) 
 	{
-		isSpotDefineHeader = YES;
+		if (placeAtTop) {
+			BOOL isSpotDefineHeader = NO;
+			if (section == 0)
+			{
+				isSpotDefineHeader = YES;
+			}
+			else
+			{
+				section -= 1;
+			}
+
+			UIView * header = %orig;
+
+			if (isSpotDefineHeader)
+			{
+				((SBSearchTableHeaderView *)header).title = @"SPOTDEFINE";
+			}
+
+			return header;
+		}
+	}
+
+	return %orig;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath 
+{
+	if (enabled) 
+	{
+		if (placeAtTop) 
+		{
+			if (indexPath.row == 0 && indexPath.section == 0)  
+			{
+				// /* Get the header from the viewcontroller, then get the text from text field */
+				SBSearchHeader * header = MSHookIvar<SBSearchHeader *>(self, "_searchHeader");
+				NSString * searchText = header.searchField.text;
+		
+				/* create an overlay of the Dictionary Controller */
+				controller = [[UIReferenceLibraryViewController alloc] initWithTerm:searchText];	
+				
+				/* present the view */
+				[self presentModalViewController:controller animated:YES];
+		
+				/* unselect the cell */
+				[tableView deselectRowAtIndexPath:indexPath animated:YES];
+			} 
+			else 
+			{
+				NSInteger newSection = indexPath.section - 1;
+				indexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:newSection];
+				%orig;
+			}
+		}
+		else 
+		{
+			if (indexPath.row == 2 && indexPath.section == tableView.numberOfSections - 1) 
+			{
+				// /* Get the header from the viewcontroller, then get the text from text field */
+				SBSearchHeader * header = MSHookIvar<SBSearchHeader *>(self, "_searchHeader");
+				NSString * searchText = header.searchField.text;
+		
+				/* create an overlay of the Dictionary Controller */
+				controller = [[UIReferenceLibraryViewController alloc] initWithTerm:searchText];	
+				
+				/* present the view */
+				[self presentModalViewController:controller animated:YES];
+		
+				/* unselect the cell */
+				[tableView deselectRowAtIndexPath:indexPath animated:YES];
+			}
+			else
+			{
+				%orig;
+			}
+		}
 	}
 	else
 	{
-		section -= 1;
-	}
-
-	UIView * header = %orig;
-
-	if (isSpotDefineHeader)
-	{
-		((SBSearchTableHeaderView *)header).title = @"SPOTDEFINE";
-	}
-	
-	return header;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-
-	/* when "Define" cell is selected */	
-	if (indexPath.row == 0 && indexPath.section == 0)  
-	{
-		// /* Get the header from the viewcontroller, then get the text from text field */
-		SBSearchHeader * header = MSHookIvar<SBSearchHeader *>(self, "_searchHeader");
-		NSString * searchText = header.searchField.text;
-
-		/* create an overlay of the Dictionary Controller */
-		controller = [[UIReferenceLibraryViewController alloc] initWithTerm:searchText];	
-		
-		/* present the view */
-		[self presentModalViewController:controller animated:YES];
-
-		/* unselect the cell */
-		[tableView deselectRowAtIndexPath:indexPath animated:YES];
-	} 
-
-	/* when any other cell is selected */
-	else 
-	{
-		NSInteger newSection = indexPath.section - 1;
-		indexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:newSection];
 		%orig;
 	}
 }
 
 
 
-- (id)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (id)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath 
+{
 
-	SBSearchTableViewCell * cell;
-
-	/* If it is our define cell, then let's edit it */
-	if (indexPath.row == 0 && indexPath.section == 0) 
+	if (enabled) 
 	{
-		NSIndexPath *real = indexPath;
+		if (placeAtTop)
+		{
+			SBSearchTableViewCell * cell;
+			/* If it is our define cell, then let's edit it */
+			if (indexPath.row == 0 && indexPath.section == 0) 
+			{
+				
+				cell = [tableView dequeueReusableCellWithIdentifier:@"SBSearchTableViewCell"];
+			    if (!cell)
+			    {
+			    	NSIndexPath *real = indexPath;
 
-		indexPath = [NSIndexPath indexPathForRow:0 inSection:tableView.numberOfSections - 1];
-		cell = %orig;
+					indexPath = [NSIndexPath indexPathForRow:0 inSection:tableView.numberOfSections - 1];
+					cell = %orig;
 
-		indexPath = real;
+					indexPath = real;
+			    }
 
-		/* title of the cell */
-		cell.title = searchDictionaryString();
-		[cell setIsLastInSection:YES];
-		cell.firstInSection = YES;
-		cell.lastInSection = YES;
-		[cell updateBottomLine];
+			    //     cell = [[SBSearchTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SelectContactCell"];
+
+				/* set up the cell */
+				cell.hasRoundedImage = NO;
+				cell.hasImage = NO;
+				cell.starred = NO;
+				cell.badged = NO;
+				cell.fetchImageOperation = nil;
+				cell.shouldKnockoutImage = YES;
+				cell.title = searchDictionaryString();
+				[cell setIsLastInSection:YES];
+				cell.firstInSection = YES;
+				cell.lastInSection = YES;
+				[cell updateBottomLine];
+			}
+			else 
+			{
+				NSInteger newSection = indexPath.section - 1;
+
+				indexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:newSection];
+				
+				/* Create all cells the default way */
+				cell = %orig;
+			}
+
+			return cell;
+		}
+		else 
+		{
+		 	/* Create all cells the default way */
+		  	SBSearchTableViewCell * cell = %orig;
+		
+		  	/* If it is our define cell, then let's edit it */
+		  	if (indexPath.row == 2 && indexPath.section == tableView.numberOfSections - 1) 
+		  	{
+		    	cell.title = searchDictionaryString();
+		  	}
+		
+		  	return cell;
+		}
 	}
 	else 
 	{
-		NSInteger newSection = indexPath.section - 1;
-
-		indexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:newSection];
-		
-		/* Create all cells the default way */
-		cell = %orig;
-	}
-
-	return cell;
+		return %orig;
+	}	
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	if (indexPath.section == 0)
+
+	if (enabled) 
 	{
-		return 48.0;
+		if (placeAtTop) 
+		{
+			if (indexPath.section == 0)
+			{
+				return 48.0;
+			}
+			else 
+			{
+				NSInteger newSection = indexPath.section - 1;
+				indexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:newSection];
+				return %orig;
+			}
+		}
+		else 
+		{
+			return %orig;
+		}
 	}
 	else 
 	{
-		NSInteger newSection = indexPath.section - 1;
-		indexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:newSection];
 		return %orig;
 	}
 }
@@ -131,13 +237,34 @@ static NSString* searchDictionaryString();
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section 
 {
-	if (section == 0) 
+	if (enabled)
 	{
-		return 1;
-	} 
-	else 
+		if (placeAtTop) 
+		{
+			if (section == 0) 
+			{
+				return 1;
+			} 
+			else 
+			{
+				section -= 1;
+				return %orig;
+			}
+		}
+		else
+		{
+			if (section == tableView.numberOfSections - 1) 
+			{
+				return 3;
+			}
+			else
+			{
+				return %orig;
+			}
+		}
+	}
+	else
 	{
-		section -= 1;
 		return %orig;
 	}
 }
@@ -167,6 +294,31 @@ static NSString* searchDictionaryString()
 		case 3:
 			return @"사전 검색";
 			break;
+
+		/* Dutch */
+		case 4:
+			return @"Woordenboek raadplegen";
+			break;
+
+		/* Spanish */
+		case 5:
+			return @"Buscar en Diccionario";
+			break;
+
+		/* French */
+		case 6:
+			return @"Rechercher dans le Dictionnaire";
+			break;
+
+		/* Japanese */
+		case 7:
+			return @"辞書を検索";
+			break;
+
+		case 8:
+			return @"查找解释";
+			break;
+
 	}
 	return @"Search Dictionary";
 }

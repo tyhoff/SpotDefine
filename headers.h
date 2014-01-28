@@ -13,7 +13,8 @@
 - (id)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView;
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section;
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section;
+- (_Bool)_shouldDisplayImagesForDomain:(unsigned int)arg1;
 @end
 
 @interface SBSearchTableHeaderView
@@ -24,6 +25,12 @@
 @property(retain, nonatomic) NSString *title;
 @property(nonatomic, getter=isLastInSection) _Bool lastInSection;
 @property(nonatomic, getter=isFirstInSection) _Bool firstInSection;
+@property(nonatomic) _Bool shouldKnockoutImage; // @synthesize shouldKnockoutImage=_shouldKnockoutImage;
+@property(nonatomic, getter=hasRoundedImage) _Bool hasRoundedImage; // @synthesize hasRoundedImage=_hasRoundedImage;
+@property(retain, nonatomic) NSOperation *fetchImageOperation; // @synthesize fetchImageOperation=_fetchImageOperation;
+@property(nonatomic, getter=hasImage) _Bool hasImage; // @synthesize hasImage=_hasImage;
+@property(nonatomic, getter=isStarred) _Bool starred; // @synthesize starred=_starred;
+@property(nonatomic, getter=isBadged) _Bool badged; // @synthesize badged=_badged;
 - (void)updateBottomLine;
 - (void)setIsLastInSection:(_Bool)arg1;
 @end
