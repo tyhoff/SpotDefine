@@ -63,7 +63,7 @@
 			<key>cell</key>
 			<string>PSTitleValueCell</string>
 			<key>label</key>
-			<string>SpotDefine 1.2</string>
+			<string>SpotDefine 1.3</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -81,7 +81,7 @@
             <key>cell</key>
             <string>PSGroupCell</string>
             <key>footerText</key>
-            <string>If you would like to see another language, please send me an email with the translation of "Search Dictionary"</string>
+            <string>If a language is incorrect or you would like another language added to SpotDefine, please send me an email and we can work on it.</string>
         </dict>
 	</array>
 	<key>title</key>
