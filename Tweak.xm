@@ -9,7 +9,7 @@ bool placeAtTop;
 int language;
 
 
-static NSString* searchDictionaryString();
+// static NSString* searchDictionaryString();
 
 /* if Search Web clicked, close the dictionary view */
 %hook UIReferenceLibraryViewController
@@ -167,7 +167,7 @@ static NSString* searchDictionaryString();
 				cell.badged = NO;
 				cell.fetchImageOperation = nil;
 				cell.shouldKnockoutImage = YES;
-				cell.title = searchDictionaryString();
+				cell.title = SpotDefineLocalizedString(@"Search Dictionary");
 				[cell setIsLastInSection:YES];
 				cell.firstInSection = YES;
 				cell.lastInSection = YES;
@@ -193,7 +193,7 @@ static NSString* searchDictionaryString();
 		  	/* If it is our define cell, then let's edit it */
 		  	if (indexPath.row == 2 && indexPath.section == tableView.numberOfSections - 1) 
 		  	{
-		    	cell.title = searchDictionaryString();
+		    	cell.title = SpotDefineLocalizedString(@"Search Dictionary");
 		  	}
 		
 		  	return cell;
@@ -271,57 +271,62 @@ static NSString* searchDictionaryString();
 
 %end;
 
-static NSString* searchDictionaryString()
+static NSString *SpotDefineLocalizedString(NSString *string)
 {
-	switch (language)
-	{
-		/* English */
-		case 0:
-			return @"Search Dictionary";
-			break;
-
-		/* Italian */
-		case 1:
-			return @"Cerca sul Dizionario";
-			break;
-
-		/* German */
-		case 2:
-			return @"Wörterbuch-Suche";
-			break;
-
-		/* Korean */
-		case 3:
-			return @"사전 검색";
-			break;
-
-		/* Dutch */
-		case 4:
-			return @"Woordenboek raadplegen";
-			break;
-
-		/* Spanish */
-		case 5:
-			return @"Buscar en Diccionario";
-			break;
-
-		/* French */
-		case 6:
-			return @"Rechercher dans le Dictionnaire";
-			break;
-
-		/* Japanese */
-		case 7:
-			return @"辞書を検索";
-			break;
-
-		case 8:
-			return @"查找解释";
-			break;
-
-	}
-	return @"Search Dictionary";
+    return [[NSBundle bundleWithPath:LocalizationsDirectoryPath]localizedStringForKey:string value:string table:nil];
 }
+
+// static NSString* searchDictionaryString()
+// {
+// 	switch (language)
+// 	{
+// 		/* English */
+// 		case 0:
+// 			return @"Search Dictionary";
+// 			break;
+
+// 		/* Italian */
+// 		case 1:
+// 			return @"Cerca sul Dizionario";
+// 			break;
+
+// 		/* German */
+// 		case 2:
+// 			return @"Wörterbuch-Suche";
+// 			break;
+
+// 		/* Korean */
+// 		case 3:
+// 			return @"사전 검색";
+// 			break;
+
+// 		/* Dutch */
+// 		case 4:
+// 			return @"Woordenboek raadplegen";
+// 			break;
+
+// 		/* Spanish */
+// 		case 5:
+// 			return @"Buscar en Diccionario";
+// 			break;
+
+// 		/* French */
+// 		case 6:
+// 			return @"Rechercher dans le Dictionnaire";
+// 			break;
+
+// 		/* Japanese */
+// 		case 7:
+// 			return @"辞書を検索";
+// 			break;
+
+// 		case 8:
+// 			return @"查找解释";
+// 			break;
+
+// 	}
+// 	return @"Search Dictionary";
+// }
 
 /* called when a change to the preferences has been made */
 static void LoadSettings()

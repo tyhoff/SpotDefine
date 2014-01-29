@@ -53,46 +53,6 @@
 		</dict>
 		<dict>
 			<key>cell</key>
-			<string>PSLinkListCell</string>
-			<key>default</key>
-			<string>0</string>
-			<key>defaults</key>
-			<string>com.tyhoff.spotdefine</string>
-			<key>detail</key>
-			<string>PSListItemsController</string>
-			<key>key</key>
-			<string>language</string>
-			<key>label</key>
-			<string>Language</string>
-			<key>PostNotification</key>
-			<string>com.tyhoff.spotdefine.preferencechanged</string>
-			<key>validTitles</key>
-			<array>
-				<string>English</string> 
-				<string>Italian</string> 
-				<string>German</string> 
-				<string>Korean</string> 
-				<string>Dutch</string>
-				<string>Spanish</string>
-				<string>French</string>
-				<string>Japanese</string>
-				<string>Chinese</string>
-			</array>
-			<key>validValues</key>
-			<array>
-				<string>0</string>
-				<string>1</string>
-				<string>2</string> 
-				<string>3</string> 
-				<string>4</string>
-				<string>5</string>
-				<string>6</string>
-				<string>7</string>
-				<string>8</string>
-			</array>
-		</dict>
-		<dict>
-			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>isStaticText</key>
 			<true/>

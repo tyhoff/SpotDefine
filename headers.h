@@ -1,4 +1,15 @@
+#define CouriaIdentifier @"com.tyhoff.spotdefine"
+#define ExtensionsDirectoryPath @"/Library/Application Support/Couria/Extensions"
+#define LocalizationsDirectoryPath @"/Library/Application Support/SpotDefine/Localizations"
+#define PreferenceBundlePath @"/Library/PreferenceBundles/Couria.bundle"
+#define UserDefaultsPlistPath @"/var/mobile/Library/Preferences/com.tyhoff.spotdefine.plist"
+// #define UserDefaultsChangedNotification "com.tyhoff.spotdefine.preferencechanged"
+// #define EnabledKey @"Enabled"
+
+
 /* Headers from private frameworks */
+
+static NSString *SpotDefineLocalizedString(NSString *string);
 
 @interface SBSearchHeader
 @property(readonly, nonatomic) UITextField *searchField;
