@@ -1,3 +1,5 @@
+SUBPROJECTS = SearchLoader
+
 TARGET =: clang
 
 # 32bit and 64bit, but only advised if keeping 7.0+ compatibility
@@ -5,6 +7,7 @@ ARCHS = armv7 arm64
 
 
 include theos/makefiles/common.mk
+include $(THEOS_MAKE_PATH)/aggregate.mk
 
 TWEAK_NAME = SpotDefine
 SpotDefine_FILES = Tweak.xm
