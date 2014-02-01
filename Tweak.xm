@@ -31,19 +31,6 @@ NSInteger searchLoaderSection;
 }
 
 
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-	UIView *header = %orig;
-	NSString *headerTitle = ((SBSearchTableHeaderView *)header).title;
-
-	if ([headerTitle isEqualToString:@"Dictionary"]) 
-	{
-		searchLoaderSection = section;
-	}
-
-	return header;
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath 
 {
 	if (indexPath.section == searchLoaderSection) 
@@ -77,7 +64,6 @@ NSInteger searchLoaderSection;
 		/* unselect the cell */
 		[tableView deselectRowAtIndexPath:indexPath animated:YES];
 	}
-
 }
 
 
@@ -126,8 +112,7 @@ static NSString *SpotDefineLocalizedString(NSString *string)
 static void LoadSettings()
 {
   	NSDictionary *prefs = [NSDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/com.tyhoff.spotdefine.plist"];
-  	searchDictionaryCellEnabled = GET_BOOL(@"searchDictionaryCellEnabled", YES);
-  	language = GET_INT(@"language", 0);
+  	searchDictionaryCellEnabled = GET_BOOL(@"FixedSearchDictionaryCell", YES);
 }
 
 /* called when a change to the preferences has been made */
