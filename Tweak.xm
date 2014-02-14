@@ -70,7 +70,6 @@ int language;
 	  	if (indexPath.row == 1 && indexPath.section == tableView.numberOfSections - 1) 
 	  	{
 	    	[cell setIsLastInSection:NO];
-	    	// [cell updateBottomLine];
 	  	}
 
 	  	/* If it is our define cell, then let's edit it */
