@@ -18,6 +18,8 @@
 			<string>PSGroupCell</string>
 			<key>label</key>
 			<string>Dictionary Spotlight Section</string>
+			<key>footerText</key>
+            <string>To enable/disable the dictionary showing up in the Spotlight results or to change the placement, do so in Settings->General->Spotlight.</string>
 		</dict>
 		<dict>
 			<key>cell</key>
