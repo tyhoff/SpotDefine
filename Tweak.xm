@@ -1,9 +1,7 @@
 #import "headers.h"
 
 UIReferenceLibraryViewController *controller;
-bool searchLoader;
 bool searchDictionaryCellEnabled;
-int language;
 
 /* if Search Web clicked, close the dictionary view */
 %hook UIReferenceLibraryViewController
