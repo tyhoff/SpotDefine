@@ -36,6 +36,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import <Foundation/Foundation.h>
 #import <SearchLoader/TLLibrary.h>
 
+#define GET_BOOL(key, default) (prefs[key] ? ((NSNumber *)prefs[key]).boolValue : default)
+
 @interface TLDictionaryDatastore : NSObject <SPSearchDatastore>
 @end
 
@@ -45,7 +47,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSMutableArray *searchResults = [NSMutableArray array];
 
 	NSDictionary * prefs = [NSDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/com.tyhoff.spotdefine.plist"];
-	bool autoCorrectEnabeld = [[prefs objectForKey:@"AutoCorrectEnabled"] intValue] ?: YES;
+	bool autoCorrectEnabeld = GET_BOOL(@"AutoCorrectEnabled", YES);
 	int limit = [[prefs objectForKey:@"MaxResults"] intValue] ?: 3;
 
 	/* check if the word exists in the local iOS dictionary */
@@ -59,6 +61,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	else
 	{
  		if (autoCorrectEnabeld) {
+			
 			/* it doesn't exist and lets get some suggestions from autocorrect */
 			UITextChecker *checker = [[UITextChecker alloc] init];
 			NSRange checkRange = NSMakeRange(0, searchString.length);
@@ -69,14 +72,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				NSString *word = [corrections objectAtIndex:idx];
 
 				/* if the autocorrect word exists in the local dictionary */
-				if ([UIReferenceLibraryViewController dictionaryHasDefinitionForTerm:word])
-				{
+				// if ([UIReferenceLibraryViewController dictionaryHasDefinitionForTerm:word])
+				// {
 					SPSearchResult *result = [[[SPSearchResult alloc] init] autorelease];
 					[result setTitle:word];
 					[result setSummary:@"AutoCorrection"];
 
 					[searchResults addObject:result];
-				}
+				// }
 			}
 		}
 	}

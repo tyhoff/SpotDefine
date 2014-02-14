@@ -1,14 +1,9 @@
 #import "headers.h"
 
-#define GET_INT(key, default) (prefs[key] ? ((NSNumber *)prefs[key]).intValue : default)
-#define GET_BOOL(key, default) (prefs[key] ? ((NSNumber *)prefs[key]).boolValue : default)
-
 UIReferenceLibraryViewController *controller;
 bool searchLoader;
 bool searchDictionaryCellEnabled;
 int language;
-
-NSInteger searchLoaderSection;
 
 /* if Search Web clicked, close the dictionary view */
 %hook UIReferenceLibraryViewController
@@ -22,18 +17,12 @@ NSInteger searchLoaderSection;
 /* hook into Spotlights View Controller */
 %hook SBSearchViewController
 
-
-- (void)_updateTableContents
-{
-	%log;
-	searchLoaderSection = 0;
-	%orig;
-}
-
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath 
 {
-	if (indexPath.section == searchLoaderSection) 
+	UIView * header = [self tableView:tableView viewForHeaderInSection:indexPath.section];
+	NSString * headerTitle = ((SBSearchTableHeaderView *)header).title;
+
+	if ([headerTitle isEqualToString:@"DICTIONARY"]) 
 	{
 		SBSearchTableViewCell *cell = (SBSearchTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
 
@@ -45,6 +34,7 @@ NSInteger searchLoaderSection;
 
 		/* unselect the cell */
 		[tableView deselectRowAtIndexPath:indexPath animated:YES];
+		return;
 	}
 
 
@@ -63,7 +53,10 @@ NSInteger searchLoaderSection;
 
 		/* unselect the cell */
 		[tableView deselectRowAtIndexPath:indexPath animated:YES];
+		return;
 	}
+
+	%orig;
 }
 
 
@@ -74,10 +67,17 @@ NSInteger searchLoaderSection;
 		/* Create all cells the default way */
 	  	SBSearchTableViewCell * cell = %orig;
 	
+	  	if (indexPath.row == 1 && indexPath.section == tableView.numberOfSections - 1) 
+	  	{
+	    	[cell setIsLastInSection:NO];
+	    	// [cell updateBottomLine];
+	  	}
+
 	  	/* If it is our define cell, then let's edit it */
 	  	if (indexPath.row == 2 && indexPath.section == tableView.numberOfSections - 1) 
 	  	{
 	    	cell.title = SpotDefineLocalizedString(@"Search Dictionary");
+	    	[cell setIsLastInSection:YES];
 	  	}
 	
 	  	return cell;
@@ -93,7 +93,7 @@ NSInteger searchLoaderSection;
 	{
 		if (section == tableView.numberOfSections - 1) 
 		{
-			return 3;
+			return %orig + 1;
 		}
 	}
 
@@ -125,8 +125,6 @@ static void ChangeNotification(CFNotificationCenterRef center, void *observer, C
 /* constructor of tweak */
 %ctor
 {
-	searchLoaderSection = 0;
-
 	/* subsribe to preference changed notification */
 	CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, ChangeNotification, CFSTR("com.tyhoff.spotdefine.preferencechanged"), NULL, CFNotificationSuspensionBehaviorCoalesce);
   	LoadSettings();

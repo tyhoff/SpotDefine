@@ -6,6 +6,9 @@
 // #define UserDefaultsChangedNotification "com.tyhoff.spotdefine.preferencechanged"
 // #define EnabledKey @"Enabled"
 
+#define GET_INT(key, default) (prefs[key] ? ((NSNumber *)prefs[key]).intValue : default)
+#define GET_BOOL(key, default) (prefs[key] ? ((NSNumber *)prefs[key]).boolValue : default)
+
 
 /* Headers from private frameworks */
 
@@ -25,6 +28,7 @@ static NSString *SpotDefineLocalizedString(NSString *string);
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView;
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section;
+- (id)tableView:(id)arg1 viewForHeaderInSection:(long long)arg2;
 - (_Bool)_shouldDisplayImagesForDomain:(unsigned int)arg1;
 @end
 
