@@ -2,4 +2,4 @@
 *.deb
 _/*
 obj/*
-.theos/*
+.theos/
