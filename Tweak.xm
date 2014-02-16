@@ -158,7 +158,7 @@ static NSString *SpotDefineLocalizedString(NSString *string)
 static void LoadSettings()
 {
   	NSDictionary *prefs = [NSDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/com.tyhoff.spotdefine.plist"];
-  	searchDictionaryCellEnabled = GET_BOOL(@"FixedSearchDictionaryCell", YES);
+  	searchDictionaryCellEnabled = GET_BOOL(@"FixedSearchDictionaryCell", NO);
 }
 
 /* called when a change to the preferences has been made */
