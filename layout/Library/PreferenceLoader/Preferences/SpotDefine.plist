@@ -70,6 +70,8 @@
 			<string>PSGroupCell</string>
 			<key>label</key>
 			<string>Fixed Search Cell</string>
+			<key>footerText</key>
+            <string>Appears at bottom of Spotlight results.</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -97,7 +99,7 @@
 			<key>cell</key>
 			<string>PSTitleValueCell</string>
 			<key>label</key>
-			<string>SpotDefine 1.3</string>
+			<string>SpotDefine 1.3.1</string>
 		</dict>
 		<dict>
 			<key>cell</key>
