@@ -1,7 +1,5 @@
 .DS_Store
-com.*
+*.deb
 _/*
-importantlog
 obj/*
 .theos/*
-log.xm
