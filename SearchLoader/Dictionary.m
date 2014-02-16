@@ -48,20 +48,22 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 	NSDictionary * prefs = [NSDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/com.tyhoff.spotdefine.plist"];
 	bool autoCorrectEnabeld = GET_BOOL(@"AutoCorrectEnabled", YES);
-	int limit = [[prefs objectForKey:@"MaxResults"] intValue] ?: 3;
+	int limit = [[prefs objectForKey:@"MaxResults"] intValue] ?: 1;
 
-	/* check if the word exists in the local iOS dictionary */
-	if ([UIReferenceLibraryViewController dictionaryHasDefinitionForTerm:searchString])
+
+
+	if (autoCorrectEnabeld)
 	{
-		/* it exists and set that as the only cell */
-		SPSearchResult *result = [[[SPSearchResult alloc] init] autorelease];
-		[result setTitle:searchString];
-		[searchResults addObject:result];
-	}
-	else
-	{
- 		if (autoCorrectEnabeld) {
-			
+		/* check if the word exists in the local iOS dictionary */
+		if ([UIReferenceLibraryViewController dictionaryHasDefinitionForTerm:searchString])
+		{
+			/* it exists and set that as the only cell */
+			SPSearchResult *result = [[[SPSearchResult alloc] init] autorelease];
+			[result setTitle:searchString];
+			[searchResults addObject:result];
+		}
+		else
+		{
 			/* it doesn't exist and lets get some suggestions from autocorrect */
 			UITextChecker *checker = [[UITextChecker alloc] init];
 			NSRange checkRange = NSMakeRange(0, searchString.length);
@@ -71,18 +73,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				
 				NSString *word = [corrections objectAtIndex:idx];
 
-				/* if the autocorrect word exists in the local dictionary */
-				// if ([UIReferenceLibraryViewController dictionaryHasDefinitionForTerm:word])
-				// {
-					SPSearchResult *result = [[[SPSearchResult alloc] init] autorelease];
-					[result setTitle:word];
-					[result setSummary:@"AutoCorrection"];
+				SPSearchResult *result = [[[SPSearchResult alloc] init] autorelease];
+				[result setTitle:word];
+				[result setSummary:@"AutoCorrection"];
 
-					[searchResults addObject:result];
-				// }
+				[searchResults addObject:result];
 			}
 		}
 	}
+	else 
+	{
+		/* it exists and set that as the only cell */
+		SPSearchResult *result = [[[SPSearchResult alloc] init] autorelease];
+		[result setTitle:searchString];
+		[searchResults addObject:result];
+	}
+
+	
 
 	TLCommitResults(searchResults, TLDomain(@"com.apple.DictionaryServices", @"DictionarySearch"), results);
 

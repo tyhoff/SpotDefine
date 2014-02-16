@@ -37,7 +37,6 @@ static void dismissDictionary();
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView;
 - (id)tableView:(id)arg1 viewForHeaderInSection:(long long)arg2;
 - (void)tableView:(UITableView *)tableView presentDictionaryWithTerm:(NSString *)term nearCell:(SBSearchTableViewCell *)cell;
-
 - (void)dismiss;
 @end
 
