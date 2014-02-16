@@ -14,23 +14,30 @@
 
 static NSString *SpotDefineLocalizedString(NSString *string);
 static BOOL isIpad();
+static void dismissDictionary();
 
 @interface SBSearchHeader
 @property(readonly, nonatomic) UITextField *searchField;
 @end;
 
+@interface SBSearchTableViewCell : UITableViewCell
+@property(retain, nonatomic) NSString *title;
+@property(nonatomic, getter=isLastInSection) _Bool lastInSection;
+@property(nonatomic, getter=isFirstInSection) _Bool firstInSection;
+- (void)setIsLastInSection:(_Bool)arg1;
+@end
+
 @interface SBSearchViewController : UIViewController
 {
-	SBSearchHeader *_searchHeader;
+    SBSearchHeader *_searchHeader;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
 - (id)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView;
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section;
 - (id)tableView:(id)arg1 viewForHeaderInSection:(long long)arg2;
-- (_Bool)_shouldDisplayImagesForDomain:(unsigned int)arg1;
+- (void)tableView:(UITableView *)tableView presentDictionaryWithTerm:(NSString *)term nearCell:(SBSearchTableViewCell *)cell;
+
 - (void)dismiss;
 @end
 
@@ -38,16 +45,6 @@ static BOOL isIpad();
 @property(retain, nonatomic) NSString *title;
 @end
 
-@interface SBSearchTableViewCell : UITableViewCell
-@property(retain, nonatomic) NSString *title;
-@property(nonatomic, getter=isLastInSection) _Bool lastInSection;
-@property(nonatomic, getter=isFirstInSection) _Bool firstInSection;
-@property(nonatomic) _Bool shouldKnockoutImage; // @synthesize shouldKnockoutImage=_shouldKnockoutImage;
-@property(nonatomic, getter=hasRoundedImage) _Bool hasRoundedImage; // @synthesize hasRoundedImage=_hasRoundedImage;
-@property(retain, nonatomic) NSOperation *fetchImageOperation; // @synthesize fetchImageOperation=_fetchImageOperation;
-@property(nonatomic, getter=hasImage) _Bool hasImage; // @synthesize hasImage=_hasImage;
-@property(nonatomic, getter=isStarred) _Bool starred; // @synthesize starred=_starred;
-@property(nonatomic, getter=isBadged) _Bool badged; // @synthesize badged=_badged;
-- (void)updateBottomLine;
-- (void)setIsLastInSection:(_Bool)arg1;
+@interface SBUIController
+- (_Bool)_activateAppSwitcherFromSide:(int)arg1;
 @end

@@ -4,31 +4,31 @@ UIReferenceLibraryViewController *controller;
 UIPopoverController *popover;
 bool searchDictionaryCellEnabled;
 
-/* if Search Web clicked, close the dictionary view */
+%hook SBUIController
+- (_Bool)_activateAppSwitcherFromSide:(int)arg1
+{
+    dismissDictionary();
+	return %orig;
+}
+%end
+
+
 %hook UIReferenceLibraryViewController
+/* if Search Web clicked, close the dictionary view */
 - (void)_searchWeb:(id)arg1
 {
 	%orig;
-    if (isIpad()) 
-    {
-        [popover dismissPopoverAnimated:NO];
-    }
-    else
-    {
-        [self dismissModalViewControllerAnimated:YES];
-    }
+    dismissDictionary();
 }
 %end
 
 /* hook into Spotlights View Controller */
 %hook SBSearchViewController
+/* if spotlight closes, close the dictionary */
 - (void)dismiss 
 {
-    if (isIpad())
-    {
-        [popover dismissPopoverAnimated:NO];
-    }
-    %orig;
+    dismissDictionary();
+	%orig;
 }
 
 
@@ -40,30 +40,13 @@ bool searchDictionaryCellEnabled;
 
 	if ([headerTitle isEqualToString:@"DICTIONARY"]) 
 	{
-		// /* create an overlay of the Dictionary Controller */
-		controller = [[UIReferenceLibraryViewController alloc] initWithTerm:cell.title];	
-		
-		/* present the view */
-        if (isIpad()) 
-        {
-            popover = [[UIPopoverController alloc]
-                                       initWithContentViewController:controller];
-
-            popover.popoverContentSize=CGSizeMake(400.0, 500.0);
-
-            [popover presentPopoverFromRect:cell.frame inView:tableView
-                permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
-        }
-        else
-        {
-            [self presentModalViewController:controller animated:YES];
-        }
+		/* create an overlay of the Dictionary Controller */
+		[self tableView:tableView presentDictionaryWithTerm:cell.title nearCell:cell];
 
 		/* unselect the cell */
 		[tableView deselectRowAtIndexPath:indexPath animated:YES];
 		return;
 	}
-
 
 
 	if (searchDictionaryCellEnabled && indexPath.row == 2 && indexPath.section == tableView.numberOfSections - 1)
@@ -73,30 +56,48 @@ bool searchDictionaryCellEnabled;
 		NSString * searchText = header.searchField.text;
 
 		// /* create an overlay of the Dictionary Controller */
-		controller = [[UIReferenceLibraryViewController alloc] initWithTerm:searchText];	
-		
-		/* present the view */
-        if (isIpad()) 
-        {
-            popover = [[UIPopoverController alloc]
-                                       initWithContentViewController:controller];
+		[self tableView:tableView presentDictionaryWithTerm:searchText nearCell:cell];
 
-            popover.popoverContentSize=CGSizeMake(400.0, 500.0);
-
-            [popover presentPopoverFromRect:cell.frame inView:tableView
-                permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
-        }
-        else
-        {
-            [self presentModalViewController:controller animated:YES];
-        }
-
-		/* unselect the cell */
+		/* deselect the cell */
 		[tableView deselectRowAtIndexPath:indexPath animated:YES];
 		return;
 	}
 
 	%orig;
+}
+
+%new
+- (void)tableView:(UITableView *)tableView presentDictionaryWithTerm:(NSString *)term 
+		nearCell:(SBSearchTableViewCell *)cell
+{
+	controller = [[UIReferenceLibraryViewController alloc] initWithTerm:term];
+
+    if (isIpad()) 
+    {
+        popover = [[UIPopoverController alloc]
+                                   initWithContentViewController:controller];
+
+        popover.popoverContentSize=CGSizeMake(400.0, 500.0);
+
+        [popover presentPopoverFromRect:cell.frame inView:tableView
+            permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
+    }
+    else
+    {
+        [self presentModalViewController:controller animated:YES];
+    }
+}
+
+static void dismissDictionary()
+{
+	if (isIpad()) 
+    {
+        [popover dismissPopoverAnimated:NO];
+    }
+    else
+    {
+        [controller dismissModalViewControllerAnimated:NO];
+    }
 }
 
 
