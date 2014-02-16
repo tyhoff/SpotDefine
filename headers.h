@@ -13,6 +13,7 @@
 /* Headers from private frameworks */
 
 static NSString *SpotDefineLocalizedString(NSString *string);
+static BOOL isIpad();
 
 @interface SBSearchHeader
 @property(readonly, nonatomic) UITextField *searchField;
@@ -30,6 +31,7 @@ static NSString *SpotDefineLocalizedString(NSString *string);
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section;
 - (id)tableView:(id)arg1 viewForHeaderInSection:(long long)arg2;
 - (_Bool)_shouldDisplayImagesForDomain:(unsigned int)arg1;
+- (void)dismiss;
 @end
 
 @interface SBSearchTableHeaderView
