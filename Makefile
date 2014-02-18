@@ -1,4 +1,4 @@
-SUBPROJECTS = SearchLoader
+SUBPROJECTS = SearchLoader SpotDefinePrefs
 
 TARGET =: clang
 
