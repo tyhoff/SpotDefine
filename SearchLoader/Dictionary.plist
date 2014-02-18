@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "--//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+
+<plist version="1.0">
+<dict>
+    <key>entry</key>
+    <dict>
+        <key>cell</key>
+        <string>PSLinkCell</string>
+        <key>icon</key>
+        <string>Music.png</string>
+        <key>label</key>
+        <string>SpotDefine AutoCorrections</string>
+    </dict>
+
+    <key>items</key>
+    <array>
+        <dict>
+            <key>cell</key>
+            <string>PSGroupCell</string>
+            <key>label</key>
+            <string>Max Results</string>
+        </dict>
+
+        <dict>
+            <key>cell</key>
+            <string>PSLinkListCell</string>
+            <key>defaults</key>
+            <string>com.tyhoff.spotdefine</string>
+            <key>default</key>
+            <integer>1</integer>
+            <key>detail</key>
+            <string>PSListItemsController</string>
+            <key>label</key>
+            <string>Max Results</string>
+            <key>key</key>
+            <string>MaxResults</string>
+            <key>validTitles</key>
+            <array>
+                <string>1</string>
+                <string>2</string>
+                <string>3</string>
+                <string>4</string>
+                <string>5</string>
+            </array>
+            <key>validValues</key>
+            <array>
+                <integer>1</integer>
+                <integer>2</integer>
+                <integer>3</integer>
+                <integer>4</integer>
+                <integer>5</integer>
+            </array>
+        </dict>
+    </array>
+
+    <key>title</key>
+    <string>SpotDefine AutoCorrections</string>
+</dict>
+</plist>

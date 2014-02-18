@@ -13,13 +13,27 @@
 	</dict>
 	<key>items</key>
 	<array>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Spotlight</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSLinkCell</string>
+			<key>bundle</key>
+			<string>SearchSettings</string>
+			<key>label</key>
+			<string></string>
+		</dict>
         <dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
 			<string>Dictionary Spotlight Section</string>
 			<key>footerText</key>
-            <string>To enable/disable the dictionary showing up in the Spotlight results or to change the placement, do so in Settings->General->Spotlight.</string>
+            <string>To enable/disable the Dictionary section, do so above with "Spotlight Search"</string>
 		</dict>
 		<dict>
 			<key>cell</key>

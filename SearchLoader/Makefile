@@ -18,5 +18,8 @@ internal-stage::
 	mkdir -p $(THEOS_STAGING_DIR)/Library/SearchLoader/Applications
 	cp -r InfoBundle/ $(THEOS_STAGING_DIR)/Library/SearchLoader/Applications/Dictionary.bundle
 
+	mkdir -p $(THEOS_STAGING_DIR)/Library/SearchLoader/Preferences
+	cp Dictionary.plist $(THEOS_STAGING_DIR)/Library/SearchLoader/Preferences/DictionarySearch.plist
+
 after-install::
 	install.exec "killall -9 backboardd searchd AppIndexer &>/dev/null"
