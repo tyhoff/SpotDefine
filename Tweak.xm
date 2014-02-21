@@ -84,11 +84,6 @@ bool dictionaryShowing;
         spotDefineNow = NO;
 		return;
 	}
-
-
-	
-
-	
 }
 
 %new
