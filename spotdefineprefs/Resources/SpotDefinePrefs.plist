@@ -37,6 +37,20 @@
 		</dict>
 		<dict>
 			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.tyhoff.spotdefine</string>
+			<key>key</key>
+			<string>AutoCorrectEnabled</string>
+			<key>PostNotification</key>
+			<string>com.tyhoff.spotdefine.preferencechanged</string>
+			<key>label</key>
+			<string>Auto Correct Enabled</string>
+		</dict>
+		<dict>
+			<key>cell</key>
 			<string>PSLinkListCell</string>
 			<key>defaults</key>
 			<string>com.tyhoff.spotdefine</string>
@@ -67,20 +81,6 @@
 		</dict>
 		<dict>
 			<key>cell</key>
-			<string>PSSwitchCell</string>
-			<key>default</key>
-			<true/>
-			<key>defaults</key>
-			<string>com.tyhoff.spotdefine</string>
-			<key>key</key>
-			<string>AutoCorrectEnabled</string>
-			<key>PostNotification</key>
-			<string>com.tyhoff.spotdefine.preferencechanged</string>
-			<key>label</key>
-			<string>Auto Correct Enabled</string>
-		</dict>
-		<dict>
-			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
 			<string>Fixed Search Cell</string>
@@ -108,6 +108,8 @@
 			<true/>
 			<key>label</key>
 			<string>Credit</string>
+			<key>footerText</key>
+            <string>If a language is incorrect or you would like another language added to SpotDefine, please send me an email and we can work on it.</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -129,12 +131,6 @@
 			<key>label</key>
 			<string>Donate (PayPal)</string>
 		</dict>
-		<dict>
-            <key>cell</key>
-            <string>PSGroupCell</string>
-            <key>footerText</key>
-            <string>If a language is incorrect or you would like another language added to SpotDefine, please send me an email and we can work on it.</string>
-        </dict>
 	</array>
 	<key>title</key>
 	<string>SpotDefine</string>
