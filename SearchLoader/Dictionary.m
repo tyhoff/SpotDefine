@@ -51,7 +51,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	int limit = [[prefs objectForKey:@"MaxResults"] intValue] ?: 1;
 
 
-
 	if (autoCorrectEnabeld)
 	{
 		/* check if the word exists in the local iOS dictionary */
@@ -59,6 +58,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		{
 			/* it exists and set that as the only cell */
 			SPSearchResult *result = [[[SPSearchResult alloc] init] autorelease];
+			NSString *url = [NSString stringWithFormat:@"http://spotdefine:%@", searchString];
+			[result setUrl:url];
 			[result setTitle:searchString];
 			[searchResults addObject:result];
 		}
@@ -74,6 +75,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				NSString *word = [corrections objectAtIndex:idx];
 
 				SPSearchResult *result = [[[SPSearchResult alloc] init] autorelease];
+				NSString *url = [NSString stringWithFormat:@"http://spotdefine:%@", searchString];
+				[result setUrl:url];
 				[result setTitle:word];
 				[result setSummary:@"AutoCorrection"];
 
@@ -85,6 +88,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		/* it exists and set that as the only cell */
 		SPSearchResult *result = [[[SPSearchResult alloc] init] autorelease];
+		NSString *url = [NSString stringWithFormat:@"http://spotdefine:%@", searchString];
+		[result setUrl:url];
 		[result setTitle:searchString];
 		[searchResults addObject:result];
 	}

@@ -1,20 +1,17 @@
-#define CouriaIdentifier @"com.tyhoff.spotdefine"
-#define ExtensionsDirectoryPath @"/Library/Application Support/Couria/Extensions"
-#define LocalizationsDirectoryPath @"/Library/Application Support/SpotDefine/Localizations"
-#define PreferenceBundlePath @"/Library/PreferenceBundles/Couria.bundle"
-#define UserDefaultsPlistPath @"/var/mobile/Library/Preferences/com.tyhoff.spotdefine.plist"
-// #define UserDefaultsChangedNotification "com.tyhoff.spotdefine.preferencechanged"
-// #define EnabledKey @"Enabled"
+#import <SearchLoader/TLLibrary.h>
 
 #define GET_INT(key, default) (prefs[key] ? ((NSNumber *)prefs[key]).intValue : default)
 #define GET_BOOL(key, default) (prefs[key] ? ((NSNumber *)prefs[key]).boolValue : default)
 
-
-/* Headers from private frameworks */
+#define SpotDefineIdentifier @"com.tyhoff.spotdefine"
+#define LocalizationsDirectoryPath @"/Library/Application Support/SpotDefine/Localizations"
+#define UserDefaultsPlistPath @"/var/mobile/Library/Preferences/com.tyhoff.spotdefine.plist"
 
 static NSString *SpotDefineLocalizedString(NSString *string);
 static BOOL isIpad();
 static void dismissDictionary();
+
+/* Headers from private frameworks */
 
 @interface SBSearchHeader
 @property(readonly, nonatomic) UITextField *searchField;
@@ -22,8 +19,6 @@ static void dismissDictionary();
 
 @interface SBSearchTableViewCell : UITableViewCell
 @property(retain, nonatomic) NSString *title;
-@property(nonatomic, getter=isLastInSection) _Bool lastInSection;
-@property(nonatomic, getter=isFirstInSection) _Bool firstInSection;
 - (void)setIsLastInSection:(_Bool)arg1;
 @end
 
@@ -46,4 +41,12 @@ static void dismissDictionary();
 
 @interface SBUIController
 - (_Bool)_activateAppSwitcherFromSide:(int)arg1;
+@end
+
+@interface SBSearchModel
+- (id)launchingURLForResult:(SPSearchResult *)result withDisplayIdentifier:(NSString *)identifier andSection:(SPSearchResultSection *)section;
+@end
+
+@interface SpringBoard
+- (void)_menuButtonDown:(struct __IOHIDEvent *)arg1;
 @end

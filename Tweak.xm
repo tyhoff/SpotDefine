@@ -3,6 +3,20 @@
 UIReferenceLibraryViewController *controller;
 UIPopoverController *popover;
 bool searchDictionaryCellEnabled;
+bool spotDefineNow;
+
+%hook SBSearchModel
+- (id)launchingURLForResult:(SPSearchResult *)result withDisplayIdentifier:(NSString *)identifier andSection:(SPSearchResultSection *)section
+{
+    if ([identifier isEqualToString:@"com.apple.DictionaryServices"])
+    {
+        spotDefineNow = YES;
+        return nil;
+    }
+
+    return %orig;
+}
+%end
 
 %hook SBUIController
 - (_Bool)_activateAppSwitcherFromSide:(int)arg1
@@ -31,39 +45,43 @@ bool searchDictionaryCellEnabled;
 	%orig;
 }
 
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath 
 {
-	UIView * header = [self tableView:tableView viewForHeaderInSection:indexPath.section];
-	NSString * headerTitle = ((SBSearchTableHeaderView *)header).title;
 	SBSearchTableViewCell *cell = (SBSearchTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
 
-	if ([headerTitle isEqualToString:@"DICTIONARY"]) 
+    if (searchDictionaryCellEnabled && indexPath.row == 2 && indexPath.section == tableView.numberOfSections - 1)
+    {
+        // /* Get the header from the viewcontroller, then get the text from text field */
+        SBSearchHeader * header = MSHookIvar<SBSearchHeader *>(self, "_searchHeader");
+        NSString * searchText = header.searchField.text;
+
+        // /* create an overlay of the Dictionary Controller */
+        [self tableView:tableView presentDictionaryWithTerm:searchText nearCell:cell];
+
+        /* deselect the cell */
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        return;
+    }
+
+    %orig;
+
+	if (spotDefineNow) 
 	{
 		/* create an overlay of the Dictionary Controller */
 		[self tableView:tableView presentDictionaryWithTerm:cell.title nearCell:cell];
 
 		/* unselect the cell */
 		[tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+        /* reset boolean */
+        spotDefineNow = NO;
 		return;
 	}
 
 
-	if (searchDictionaryCellEnabled && indexPath.row == 2 && indexPath.section == tableView.numberOfSections - 1)
-	{
-		// /* Get the header from the viewcontroller, then get the text from text field */
-		SBSearchHeader * header = MSHookIvar<SBSearchHeader *>(self, "_searchHeader");
-		NSString * searchText = header.searchField.text;
+	
 
-		// /* create an overlay of the Dictionary Controller */
-		[self tableView:tableView presentDictionaryWithTerm:searchText nearCell:cell];
-
-		/* deselect the cell */
-		[tableView deselectRowAtIndexPath:indexPath animated:YES];
-		return;
-	}
-
-	%orig;
+	
 }
 
 %new
@@ -171,6 +189,7 @@ static void ChangeNotification(CFNotificationCenterRef center, void *observer, C
 /* constructor of tweak */
 %ctor
 {
+    spotDefineNow = NO;
 	/* subsribe to preference changed notification */
 	CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, ChangeNotification, CFSTR("com.tyhoff.spotdefine.preferencechanged"), NULL, CFNotificationSuspensionBehaviorCoalesce);
   	LoadSettings();
