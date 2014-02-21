@@ -46,7 +46,3 @@ static void dismissDictionary();
 @interface SBSearchModel
 - (id)launchingURLForResult:(SPSearchResult *)result withDisplayIdentifier:(NSString *)identifier andSection:(SPSearchResultSection *)section;
 @end
-
-@interface SpringBoard
-- (void)_menuButtonDown:(struct __IOHIDEvent *)arg1;
-@end

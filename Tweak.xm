@@ -4,6 +4,7 @@ UIReferenceLibraryViewController *controller;
 UIPopoverController *popover;
 bool searchDictionaryCellEnabled;
 bool spotDefineNow;
+bool dictionaryShowing;
 
 %hook SBSearchModel
 - (id)launchingURLForResult:(SPSearchResult *)result withDisplayIdentifier:(NSString *)identifier andSection:(SPSearchResultSection *)section
@@ -41,8 +42,14 @@ bool spotDefineNow;
 /* if spotlight closes, close the dictionary */
 - (void)dismiss 
 {
-    dismissDictionary();
-	%orig;
+    if (dictionaryShowing)
+    {
+        dismissDictionary();
+    }
+    else
+    {
+    	%orig;
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath 
@@ -104,6 +111,8 @@ bool spotDefineNow;
     {
         [self presentModalViewController:controller animated:YES];
     }
+
+    dictionaryShowing = YES;
 }
 
 static void dismissDictionary()
@@ -116,6 +125,8 @@ static void dismissDictionary()
     {
         [controller dismissModalViewControllerAnimated:NO];
     }
+
+    dictionaryShowing = NO;
 }
 
 
@@ -189,6 +200,7 @@ static void ChangeNotification(CFNotificationCenterRef center, void *observer, C
 /* constructor of tweak */
 %ctor
 {
+    dictionaryShowing = NO;
     spotDefineNow = NO;
 	/* subsribe to preference changed notification */
 	CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, ChangeNotification, CFSTR("com.tyhoff.spotdefine.preferencechanged"), NULL, CFNotificationSuspensionBehaviorCoalesce);
