@@ -33,7 +33,7 @@ bool dictionaryShowing;
 - (void)_searchWeb:(id)arg1
 {
 	%orig;
-    dismissDictionary(NO);
+    dismissDictionary(YES);
 }
 %end
 
@@ -119,7 +119,7 @@ static void dismissDictionary(bool animated)
 {
 	if (isIpad()) 
     {
-        [popover dismissPopoverAnimated:animated];
+        [popover dismissPopoverAnimated:NO];
     }
     else
     {
