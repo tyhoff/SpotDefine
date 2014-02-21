@@ -7,7 +7,7 @@
 	<key>SPCategory</key>
 	<string>DictionarySearch</string>
 	<key>SPDisplayIdentifier</key>
-	<string>com.apple.DictionaryServices</string>
+	<string>com.tyhoff.SpotDefine</string>
 	<key>TLIsSearchBundle</key>
 	<true />
 	<key>TLDisplayName</key>

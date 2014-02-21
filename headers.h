@@ -9,7 +9,7 @@
 
 static NSString *SpotDefineLocalizedString(NSString *string);
 static BOOL isIpad();
-static void dismissDictionary();
+static void dismissDictionary(bool animated);
 
 /* Headers from private frameworks */
 

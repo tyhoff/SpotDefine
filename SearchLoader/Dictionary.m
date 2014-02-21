@@ -96,17 +96,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 	
 
-	TLCommitResults(searchResults, TLDomain(@"com.apple.DictionaryServices", @"DictionarySearch"), results);
+	TLCommitResults(searchResults, TLDomain(@"com.tyhoff.SpotDefine", @"DictionarySearch"), results);
 
 	[results queryFinishedWithError:nil];	
 }
 
 - (NSArray *)searchDomains {
-	return [NSArray arrayWithObject:[NSNumber numberWithInteger:TLDomain(@"com.apple.DictionaryServices", @"DictionarySearch")]];
+	return [NSArray arrayWithObject:[NSNumber numberWithInteger:TLDomain(@"com.tyhoff.SpotDefine", @"DictionarySearch")]];
 }
 
 - (NSString *)displayIdentifierForDomain:(NSInteger)domain {
-	return @"com.apple.DictionaryServices";
+	return @"com.tyhoff.SpotDefine";
 }
 
 @end

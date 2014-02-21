@@ -9,7 +9,7 @@ bool dictionaryShowing;
 %hook SBSearchModel
 - (id)launchingURLForResult:(SPSearchResult *)result withDisplayIdentifier:(NSString *)identifier andSection:(SPSearchResultSection *)section
 {
-    if ([identifier isEqualToString:@"com.apple.DictionaryServices"])
+    if ([identifier isEqualToString:@"com.tyhoff.SpotDefine"])
     {
         spotDefineNow = YES;
         return nil;
@@ -22,7 +22,7 @@ bool dictionaryShowing;
 %hook SBUIController
 - (_Bool)_activateAppSwitcherFromSide:(int)arg1
 {
-    dismissDictionary();
+    dismissDictionary(NO);
 	return %orig;
 }
 %end
@@ -33,7 +33,7 @@ bool dictionaryShowing;
 - (void)_searchWeb:(id)arg1
 {
 	%orig;
-    dismissDictionary();
+    dismissDictionary(NO);
 }
 %end
 
@@ -44,7 +44,7 @@ bool dictionaryShowing;
 {
     if (dictionaryShowing)
     {
-        dismissDictionary();
+        dismissDictionary(YES);
     }
     else
     {
@@ -115,15 +115,15 @@ bool dictionaryShowing;
     dictionaryShowing = YES;
 }
 
-static void dismissDictionary()
+static void dismissDictionary(bool animated)
 {
 	if (isIpad()) 
     {
-        [popover dismissPopoverAnimated:NO];
+        [popover dismissPopoverAnimated:animated];
     }
     else
     {
-        [controller dismissModalViewControllerAnimated:NO];
+        [controller dismissModalViewControllerAnimated:animated];
     }
 
     dictionaryShowing = NO;
