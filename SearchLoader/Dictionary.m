@@ -2,6 +2,7 @@
 #import <SearchLoader/TLLibrary.h>
 
 #define GET_BOOL(key, default) (prefs[key] ? ((NSNumber *)prefs[key]).boolValue : default)
+#define URL_SCHEME @"http://spotdefine:"
 
 @interface TLDictionaryDatastore : NSObject <SPSearchDatastore>
 @end
@@ -23,7 +24,7 @@
 		{
 			/* it exists and set that as the only cell */
 			SPSearchResult *result = [[[SPSearchResult alloc] init] autorelease];
-			NSString *url = [NSString stringWithFormat:@"http://spotdefine:%@", searchString];
+			NSString *url = [NSString stringWithFormat:@"%@%@", URL_SCHEME, searchString];
 			[result setUrl:url];
 			[result setTitle:searchString];
 			[searchResults addObject:result];
@@ -40,7 +41,7 @@
 				NSString *word = [corrections objectAtIndex:idx];
 
 				SPSearchResult *result = [[[SPSearchResult alloc] init] autorelease];
-				NSString *url = [NSString stringWithFormat:@"http://spotdefine:%@", searchString];
+				NSString *url = [NSString stringWithFormat:@"%@%@", URL_SCHEME, word];
 				[result setUrl:url];
 				[result setTitle:word];
 				[result setSummary:@"AutoCorrection"];
@@ -53,7 +54,7 @@
 	{
 		/* it exists and set that as the only cell */
 		SPSearchResult *result = [[[SPSearchResult alloc] init] autorelease];
-		NSString *url = [NSString stringWithFormat:@"http://spotdefine:%@", searchString];
+		NSString *url = [NSString stringWithFormat:@"%@%@", URL_SCHEME, searchString];
 		[result setUrl:url];
 		[result setTitle:searchString];
 		[searchResults addObject:result];
