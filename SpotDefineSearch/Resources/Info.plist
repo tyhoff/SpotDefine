@@ -7,11 +7,11 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>DictionarySearch</string>
+	<string>SpotDefineSearch</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.tyhoff.spotdefine.search</string>
 	<key>CFBundleName</key>
-	<string>DictionarySearch</string>
+	<string>SpotDefineSearch</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>

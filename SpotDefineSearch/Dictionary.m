@@ -62,13 +62,13 @@
 
 	
 
-	TLCommitResults(searchResults, TLDomain(@"com.tyhoff.SpotDefine", @"DictionarySearch"), results);
+	TLCommitResults(searchResults, TLDomain(@"com.tyhoff.SpotDefine", @"SpotDefineSearch"), results);
 
 	[results queryFinishedWithError:nil];	
 }
 
 - (NSArray *)searchDomains {
-	return [NSArray arrayWithObject:[NSNumber numberWithInteger:TLDomain(@"com.tyhoff.SpotDefine", @"DictionarySearch")]];
+	return [NSArray arrayWithObject:[NSNumber numberWithInteger:TLDomain(@"com.tyhoff.SpotDefine", @"SpotDefineSearch")]];
 }
 
 - (NSString *)displayIdentifierForDomain:(NSInteger)domain {

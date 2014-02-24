@@ -46,3 +46,7 @@ static void dismissDictionary(bool animated);
 @interface SBSearchModel
 - (id)launchingURLForResult:(SPSearchResult *)result withDisplayIdentifier:(NSString *)identifier andSection:(SPSearchResultSection *)section;
 @end
+
+@interface SBWorkspace
+- (void)workspace:(id)arg1 applicationDidStartLaunching:(id)arg2;
+@end

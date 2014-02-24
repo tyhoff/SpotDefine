@@ -5,7 +5,7 @@
 	<key>LSTypeIsPackage</key>
 	<true />
 	<key>SPCategory</key>
-	<string>DictionarySearch</string>
+	<string>SpotDefineSearch</string>
 	<key>SPDisplayIdentifier</key>
 	<string>com.tyhoff.SpotDefine</string>
 	<key>TLIsSearchBundle</key>

@@ -6,6 +6,11 @@ bool searchDictionaryCellEnabled;
 bool spotDefineNow;
 bool dictionaryShowing;
 
+/* 
+ * This listens for Spotlight actions that will open a URL. If it is coming from SpotDefine
+ * then this will set a boolean spotDefineNow to YES. When the UITableView "didSelectRow..."
+ * happens, then it will look for that boolean and perform the necessary action if it is YES.
+ */
 %hook SBSearchModel
 - (id)launchingURLForResult:(SPSearchResult *)result withDisplayIdentifier:(NSString *)identifier andSection:(SPSearchResultSection *)section
 {
@@ -19,6 +24,7 @@ bool dictionaryShowing;
 }
 %end
 
+/* If app switcher shows, close out of dictionary window */
 %hook SBUIController
 - (_Bool)_activateAppSwitcherFromSide:(int)arg1
 {
@@ -27,19 +33,26 @@ bool dictionaryShowing;
 }
 %end
 
-
-%hook UIReferenceLibraryViewController
-/* if Search Web clicked, close the dictionary view */
-- (void)_searchWeb:(id)arg1
-{
-	%orig;
-    dismissDictionary(YES);
+/* 
+ * If another app is being open (Search Web from Dictionary or by 
+ * clicking notification), close out of Dictionary 
+ */
+%hook SBWorkspace
+- (void)workspace:(id)arg1 applicationDidStartLaunching:(id)arg2 
+{ 
+    %orig;
+    dismissDictionary(NO);
 }
 %end
 
-/* hook into Spotlights View Controller */
+
+
 %hook SBSearchViewController
-/* if spotlight closes, close the dictionary */
+
+/* 
+ * If spotlight is trying to close, close the dictionary first, then close Spotlight
+ * with the next home button click 
+ */
 - (void)dismiss 
 {
     if (dictionaryShowing)
@@ -58,11 +71,11 @@ bool dictionaryShowing;
 
     if (searchDictionaryCellEnabled && indexPath.row == 2 && indexPath.section == tableView.numberOfSections - 1)
     {
-        // /* Get the header from the viewcontroller, then get the text from text field */
+        /* Get the header from the viewcontroller, then get the text from text field */
         SBSearchHeader * header = MSHookIvar<SBSearchHeader *>(self, "_searchHeader");
         NSString * searchText = header.searchField.text;
 
-        // /* create an overlay of the Dictionary Controller */
+        /* create an overlay of the Dictionary Controller */
         [self tableView:tableView presentDictionaryWithTerm:searchText nearCell:cell];
 
         /* deselect the cell */
