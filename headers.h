@@ -50,3 +50,7 @@ static void dismissDictionary(bool animated);
 @interface SBWorkspace
 - (void)workspace:(id)arg1 applicationDidStartLaunching:(id)arg2;
 @end
+
+@interface SpringBoard (URLCore)
+- (void)_openURLCore:(id)arg1 display:(id)arg2 animating:(_Bool)arg3 sender:(id)arg4 additionalActivationFlags:(id)arg5 activationHandler:(id)arg6;
+@end

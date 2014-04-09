@@ -29,7 +29,7 @@ bool dictionaryShowing;
 - (_Bool)_activateAppSwitcherFromSide:(int)arg1
 {
     dismissDictionary(NO);
-	return %orig;
+    return %orig;
 }
 %end
 
@@ -40,6 +40,14 @@ bool dictionaryShowing;
 %hook SBWorkspace
 - (void)workspace:(id)arg1 applicationDidStartLaunching:(id)arg2 
 { 
+    %orig;
+    dismissDictionary(NO);
+}
+%end
+
+%hook SpringBoard
+- (void)_openURLCore:(id)arg1 display:(id)arg2 animating:(_Bool)arg3 sender:(id)arg4 additionalActivationFlags:(id)arg5 activationHandler:(id)arg6
+{
     %orig;
     dismissDictionary(NO);
 }
